@@ -13,7 +13,7 @@ export default {
     imgSrc: String,
     title: String,
     artist: String,
-    year: Number,
+    year: String,
   },
 };
 </script>
