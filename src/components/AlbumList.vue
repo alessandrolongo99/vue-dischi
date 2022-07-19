@@ -1,7 +1,20 @@
 <template>
-  <div class="text-white">
-    <AppAlbum v-for="(album, index) in albums" :key="index"
-    :imgSrc="album.poster"/>
+  <div class="row text-white justify-content-between g-4">
+    <AppAlbum
+      class="
+        d-flex
+        flex-column
+        justify-content-start
+        align-items-center
+        text-center
+      "
+      v-for="(album, index) in albums"
+      :key="index"
+      :imgSrc="album.poster"
+      :title="album.title"
+      :artist="album.author"
+      :year="album.year"
+    />
   </div>
 </template>
 
@@ -16,7 +29,7 @@ export default {
   },
   data: function () {
     return {
-        albums: [],
+      albums: [],
     };
   },
   methods: {

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <div class="container">
+    <div class="container py-5">
       <AlbumList />
     </div>
   </main>
@@ -20,5 +20,6 @@ export default {
 <style scoped>
 main {
   background-color: #1e2d3b;
+  height: 100%;
 }
 </style>
