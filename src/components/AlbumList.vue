@@ -14,21 +14,22 @@
     ></loader>
     <div>
       <select
-        :class=""
+        v-model="selectedGenre"
+        @change="filterGenre($event)"
         class="form-select my-3"
         aria-label="Default select example"
       >
-        <option selected>Genere</option>
-        <option v-for="(genre, index) in genres" :key="index" :value="index">
+        <option value="null">Genere</option>
+        <option v-for="(genre, index) in genres" :key="index" :value="genre">
           {{ genre }}
         </option>
       </select>
-      <select class="form-select my-3" aria-label="Default select example">
-        <option selected>Open this select menu</option>
+      <!-- <select class="form-select my-3" aria-label="Default select example">
+        <option disabled value="">Open this select menu</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
-      </select>
+      </select> -->
     </div>
     <AppAlbum
       class="
@@ -38,7 +39,7 @@
         align-items-center
         text-center
       "
-      v-for="(album, index) in albums"
+      v-for="(album, index) in filteredAlbums"
       :key="index"
       :imgSrc="album.poster"
       :title="album.title"
@@ -60,7 +61,9 @@ export default {
   data: function () {
     return {
       albums: [],
+      filteredAlbums: [],
       genres: [],
+      selectedGenre: "",
       isLoading: true,
     };
   },
@@ -70,6 +73,7 @@ export default {
         .get("https://flynn.boolean.careers/exercises/api/array/music")
         .then((result) => {
           this.albums = result.data.response;
+          this.filteredAlbums = [...this.albums];
           this.isLoading = false;
           this.getGenres();
         })
@@ -82,6 +86,13 @@ export default {
         if (!this.genres.includes(this.albums[i].genre)) {
           this.genres.push(this.albums[i].genre);
         }
+      }
+    },
+    filterGenre(input){
+      if(!(input == null)){
+        this.filteredAlbums.filter((album) => {
+          album.genre == input;
+        })
       }
     },
   },
