@@ -15,11 +15,11 @@
     <div>
       <select
         v-model="selectedGenre"
-        @change="filterGenre($event)"
+        @change="filterGenre"
         class="form-select my-3"
         aria-label="Default select example"
       >
-        <option value="null">Genere</option>
+        <option value="all">Genere</option>
         <option v-for="(genre, index) in genres" :key="index" :value="genre">
           {{ genre }}
         </option>
@@ -88,11 +88,15 @@ export default {
         }
       }
     },
-    filterGenre(input){
-      if(!(input == null)){
-        this.filteredAlbums.filter((album) => {
-          album.genre == input;
+    filterGenre(){
+      if(!(this.selectedGenre == 'all')){
+        this.filteredAlbums = this.albums.filter((album) => {
+          return album.genre == this.selectedGenre;
         })
+        console.log(this.filteredAlbums)
+      } else{
+        this.filteredAlbums = [...this.albums];
+        console.log(this.filteredAlbums)
       }
     },
   },
