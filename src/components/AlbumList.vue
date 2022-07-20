@@ -13,11 +13,15 @@
       name="circular"
     ></loader>
     <div>
-      <select class="form-select my-3" aria-label="Default select example">
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+      <select
+        :class=""
+        class="form-select my-3"
+        aria-label="Default select example"
+      >
+        <option selected>Genere</option>
+        <option v-for="(genre, index) in genres" :key="index" :value="index">
+          {{ genre }}
+        </option>
       </select>
       <select class="form-select my-3" aria-label="Default select example">
         <option selected>Open this select menu</option>
@@ -56,6 +60,7 @@ export default {
   data: function () {
     return {
       albums: [],
+      genres: [],
       isLoading: true,
     };
   },
@@ -66,12 +71,19 @@ export default {
         .then((result) => {
           this.albums = result.data.response;
           this.isLoading = false;
+          this.getGenres();
         })
         .catch((error) => {
           console.warn(error);
         });
     },
-    
+    getGenres() {
+      for (let i = 0; i < this.albums.length; i++) {
+        if (!this.genres.includes(this.albums[i].genre)) {
+          this.genres.push(this.albums[i].genre);
+        }
+      }
+    },
   },
   created() {
     this.getAlbum();
