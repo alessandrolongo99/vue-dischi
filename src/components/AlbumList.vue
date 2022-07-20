@@ -1,7 +1,7 @@
 <template>
   <div class="row text-white justify-content-between g-4">
     <loader
-      v-if="albums.length < 10"
+      v-show="isLoading"
       object="#ff9633"
       color1="#ffffff"
       color2="#17fd3d"
@@ -12,6 +12,20 @@
       opacity="80"
       name="circular"
     ></loader>
+    <div>
+      <select class="form-select my-3" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+      <select class="form-select my-3" aria-label="Default select example">
+        <option selected>Open this select menu</option>
+        <option value="1">One</option>
+        <option value="2">Two</option>
+        <option value="3">Three</option>
+      </select>
+    </div>
     <AppAlbum
       class="
         d-flex
@@ -42,6 +56,7 @@ export default {
   data: function () {
     return {
       albums: [],
+      isLoading: true,
     };
   },
   methods: {
@@ -50,11 +65,13 @@ export default {
         .get("https://flynn.boolean.careers/exercises/api/array/music")
         .then((result) => {
           this.albums = result.data.response;
+          this.isLoading = false;
         })
         .catch((error) => {
           console.warn(error);
         });
     },
+    
   },
   created() {
     this.getAlbum();
